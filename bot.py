@@ -11,7 +11,7 @@ intents = discord.Intents.all()
 
 client = discord.Client(intents=intents)
 
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 
 @bot.command(name="addrole", help="plans to add you to a game(role)")
@@ -65,6 +65,11 @@ async def on_error(event, *args, **kwargs):
         else:
             raise
 
-
+@bot.command(name="activity", help="Prints the activity of all active users")
+async def get_members(ctx):
+    for user in ctx.guild.members:
+        if user and user.activity:
+            await ctx.send(f"{user} playing {user.activity.name}")
+    
 # client.run(token)
 bot.run(token)
